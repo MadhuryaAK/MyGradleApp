@@ -13,23 +13,27 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'gradle build'  // Run Gradle build
+                sh 'chmod +x gradlew && ./gradlew build'  // Run Gradle build
             }
         }
         stage('Test') {
             steps {
-                sh 'gradle test'  // Run unit tests
+                sh './gradlew test'  // Run unit tests
             }
         } 
         stage('Run Application') {
             steps {
                 // Start the JAR application
-                sh 'gradle run'
-            }}}
+                sh './gradlew run &'
+            }
+        }
+    }
     post {
         success {
             echo 'Build and deployment successful!'
         }
         failure {
             echo 'Build failed!'
-        }}}
+        }
+    }
+}
